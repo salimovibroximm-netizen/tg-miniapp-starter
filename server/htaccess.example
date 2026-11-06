@@ -1,0 +1,18 @@
+# Put this file as .htaccess in your domain's web root (for example www/example.com/).
+# Apache forwards every request to the app on the local port. Change 3090 to your PORT.
+
+# Without this Apache rewrites "/" to "/index.php" and the app answers 404 on the
+# main page while /health still works - a confusing symptom.
+DirectoryIndex disabled
+
+RewriteEngine On
+
+# Keep Let's Encrypt renewals working: let Apache answer the ACME challenge itself.
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+
+RewriteRule ^(.*)$ http://127.0.0.1:3090/$1 [P,L]
+
+# Tell the app it is behind HTTPS (skipped quietly if mod_headers is not loaded)
+<IfModule mod_headers.c>
+  RequestHeader set X-Forwarded-Proto "https" env=HTTPS
+</IfModule>

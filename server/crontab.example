@@ -1,0 +1,11 @@
+# Add with `crontab -e` (or the cron section of your hosting panel).
+# Replace /home/you/myapp with the folder where the app code lives.
+
+# start after a server reboot
+@reboot sh /home/you/myapp/server/manage.sh start > /dev/null 2>&1
+
+# watchdog: start again if the process died (does nothing when it is running)
+*/5 * * * * sh /home/you/myapp/server/manage.sh start > /dev/null 2>&1
+
+# daily backup at 02:30
+30 2 * * * sh /home/you/myapp/server/backup.sh > /dev/null 2>&1

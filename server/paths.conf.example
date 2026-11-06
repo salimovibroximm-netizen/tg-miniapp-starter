@@ -1,0 +1,18 @@
+# Copy to server/paths.conf and edit. Read by install.sh, manage.sh and backup.sh.
+
+# Everything that grows: venv, database, photos, logs, backups.
+# Put it on the bigger disk if your hosting has two, and never inside the web root.
+DATA_ROOT=$HOME/myapp-data
+
+# Python 3.11 or newer. CloudLinux hosting usually has it as /opt/alt/python311/bin/python3
+PYTHON=/opt/alt/python311/bin/python3
+
+VENV=$DATA_ROOT/venv
+
+# A free local port. On shared hosting 127.0.0.1 can be shared with OTHER accounts
+# on the same machine, so pick an unusual number and check it is free first:
+#   grep -i ":$(printf '%04X' 3090) " /proc/net/tcp
+PORT=3090
+
+# Days of daily database backups to keep
+KEEP_DAYS=30
